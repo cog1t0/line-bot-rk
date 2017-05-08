@@ -34,6 +34,9 @@ class WebhookController < ApplicationController
   private
 
   def is_validate_signature
+    logger.info(is_validate_signature: 'start'})
+    logger.info(request: request.inspect})
+    logger.info({X-LINE-Signature: request.headers["X-LINE-Signature"]})
     # LINEからアクセス可能か確認
     # 認証に成功すればtrueを返す
     signature = request.headers["X-LINE-Signature"]
