@@ -52,3 +52,13 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+
+# for LINE
+gem "dotenv" #環境によって変わる設定値を制御する
+gem "faraday"
+gem "faraday_middleware"
+
+group :production do
+  gem 'rails_12factor'
+end
