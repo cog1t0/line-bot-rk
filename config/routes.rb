@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  #get 'sample/index'
+  get '/sample' => 'sample#index'
   post '/callback' => 'webhook#callback'
 end
