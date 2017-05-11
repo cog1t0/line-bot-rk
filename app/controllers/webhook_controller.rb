@@ -6,6 +6,7 @@ class WebhookController < ApplicationController
   CHANNEL_ACCESS_TOKEN = ENV['CHANNEL_ACCESS_TOKEN']
 
   def callback
+    logger.debug '======================== callback start ============================'
     unless is_validate_signature
       render :nothing => true, status: 470
     end
@@ -13,6 +14,9 @@ class WebhookController < ApplicationController
     event = params[:events][0]
     event_type = event["type"]
     replyToken = event["replyToken"]
+    logger.debug "======================== event :#{event} ============================"
+    logger.debug "======================== event_type :#{event_type} ============================"
+    logger.debug "======================== replyToken :#{replyToken} ============================"
 
     case event_type
     when "message"
@@ -28,14 +32,15 @@ class WebhookController < ApplicationController
     else
       logger.info({fail: res})
     end
+    logger.debug '======================== callback end ============================'
     render :nothing => true, status: :ok
   end
 
   private
 
   def is_validate_signature
-    logger.info({is_validate_signature: 'start'})
-    logger.info({request: request.inspect})
+    logger.debug '======================== is_validate_signature start ============================'
+    #logger.info({request: request.inspect})
     # LINEからアクセス可能か確認
     # 認証に成功すればtrueを返す
     signature = request.headers["X-LINE-Signature"]
@@ -43,6 +48,7 @@ class WebhookController < ApplicationController
     hash = OpenSSL::HMAC::digest(OpenSSL::Digest::SHA256.new, CHANNEL_SECRET, http_request_body)
     signature_answer = Base64.strict_encode64(hash)
     signature == signature_answer
+    logger.debug '======================== is_validate_signature end ============================'
   end
 end
 
