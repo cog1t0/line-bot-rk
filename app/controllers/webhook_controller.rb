@@ -24,10 +24,10 @@ class WebhookController < ApplicationController
       output_text = input_text
     end
 
-    #case event
-    #when Line::Bot::Event::Beacon
-    #  output_text = "ビーーーーーーコーーーーーーーン"
-    #end
+    case event
+    when Line::Bot::Event::Beacon
+      output_text = "ビーーーーーーコーーーーーーーン"
+    end
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, output_text)
