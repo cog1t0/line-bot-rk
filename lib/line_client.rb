@@ -16,7 +16,7 @@ class LineClient
     end
 
     res = client.post do |request|
-      request.url = path
+      request.url path
       request.headers = {
         'Content-type' => 'application/json',
         'Authorization' => "Bearer #{@channel_access_token}"
