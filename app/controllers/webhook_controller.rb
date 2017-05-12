@@ -17,11 +17,18 @@ class WebhookController < ApplicationController
     logger.debug "======================== event :#{event} ============================"
     logger.debug "======================== event_type :#{event_type} ============================"
     logger.debug "======================== replyToken :#{replyToken} ============================"
+    if event_type == "beacon"
+      logger.debug "======================== beacon だよ！！！ ============================"
+    else
+      logger.debug "======================== beacon じゃないよ ============================"
+    end
 
     case event_type
     when "message"
       input_text = event["message"]["text"]
       output_text = input_text
+    when "beacon"
+      output_text = "Beacon動いたよ！！"
     end
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
