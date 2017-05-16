@@ -1,4 +1,4 @@
-require 'line/bot'
+#require 'line/bot'
 class WebhookController < ApplicationController
   protect_from_forgery with: :null_session
 
