@@ -22,7 +22,15 @@ class WebhookController < ApplicationController
     case event_type
     when "message"
       input_text = event["message"]["text"]
-      reply = input_text
+      case input_text
+      when "アンケート"
+        puts "************************************************"
+        puts reply_confirm_message
+        reply = reply_confirm_message
+        puts "************************************************"
+      else
+        reply = input_text
+      end
     when "beacon"
       logger.debug "==================== beacon type : #{event["beacon"]["type"]}"
       case event["beacon"]["type"]
