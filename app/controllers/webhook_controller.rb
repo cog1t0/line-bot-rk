@@ -1,3 +1,4 @@
+require 'line/bot'
 class WebhookController < ApplicationController
   protect_from_forgery with: :null_session
 
@@ -17,18 +18,19 @@ class WebhookController < ApplicationController
     logger.debug "======================== event :#{event} ============================"
     logger.debug "======================== event_type :#{event_type} ============================"
     logger.debug "======================== replyToken :#{replyToken} ============================"
-    if event_type == "beacon"
-      logger.debug "======================== beacon だよ！！！ ============================"
-    else
-      logger.debug "======================== beacon じゃないよ ============================"
-    end
 
     case event_type
     when "message"
       input_text = event["message"]["text"]
       output_text = input_text
     when "beacon"
-      output_text = "Beacon動いたよ！！"
+      case event["beacon"]["type"]
+      when "enter"
+        output_text = "Beacon いらっしゃいませ！！"
+      when "leave"
+        output_text = "Beacon いってらっしゃいませ！！"
+    when "postback"
+
     end
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
@@ -57,5 +59,27 @@ class WebhookController < ApplicationController
     signature == signature_answer
     logger.debug '======================== is_validate_signature end ============================'
   end
-end
 
+  def reply_confirm_message
+    {
+      type: "template",
+      altText: "this is a confirm template",
+      template: {
+        type: "confirm",
+        text: "本日は商品をご購入頂けましたか？",
+        actions: [
+          {
+            type: "postback",
+            label: "はい",
+            data: "buy"
+          },
+          {
+            type: "postback",
+            label: "いいえ",
+            data: "not_buy"
+          }
+        ]
+      }
+    }
+  end
+end
