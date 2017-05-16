@@ -24,11 +24,13 @@ class WebhookController < ApplicationController
       input_text = event["message"]["text"]
       output_text = input_text
     when "beacon"
+      logger.debug "==================== beacon type : #{event["beacon"]["type"]}"
       case event["beacon"]["type"]
       when "enter"
         output_text = "Beacon いらっしゃいませ！！"
       when "leave"
         output_text = "Beacon いってらっしゃいませ！！"
+      end
     when "postback"
 
     end
