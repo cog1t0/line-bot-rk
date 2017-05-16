@@ -22,21 +22,21 @@ class WebhookController < ApplicationController
     case event_type
     when "message"
       input_text = event["message"]["text"]
-      output_text = input_text
+      reply = input_text
     when "beacon"
       logger.debug "==================== beacon type : #{event["beacon"]["type"]}"
       case event["beacon"]["type"]
       when "enter"
-        output_text = "Beacon いらっしゃいませ！！"
+        reply = "Beacon いらっしゃいませ！！"
       when "leave"
-        output_text = "Beacon いってらっしゃいませ！！"
+        reply = reply_confirm_message
       end
     when "postback"
 
     end
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
-    res = client.reply(replyToken, output_text)
+    res = client.reply(replyToken, reply)
 
     if res.status == 200
       logger.info({success: res})
