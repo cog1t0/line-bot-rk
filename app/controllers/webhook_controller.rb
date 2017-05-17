@@ -52,12 +52,13 @@ class WebhookController < ApplicationController
     res = client.reply_message(replyToken, reply)
     puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
     puts "res : #{res}"
-
+=begin
     if res.status == 200
       logger.info({success: res})
     else
       logger.info({fail: res})
     end
+=end
     logger.debug '======================== callback end ============================'
     render :nothing => true, status: :ok
   end
