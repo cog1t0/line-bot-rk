@@ -44,7 +44,8 @@ class WebhookController < ApplicationController
     end
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
-    res = client.reply(replyToken, reply)
+    #res = client.reply(replyToken, reply)
+    res = client.reply_message(replyToken, reply)
 
     if res.status == 200
       logger.info({success: res})
