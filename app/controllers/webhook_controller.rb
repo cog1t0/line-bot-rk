@@ -1,4 +1,4 @@
-#require 'line/bot'
+require 'line/bot'
 class WebhookController < ApplicationController
   protect_from_forgery with: :null_session
 
@@ -43,7 +43,7 @@ class WebhookController < ApplicationController
 
     end
 
-    client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
+    #client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     #res = client.reply(replyToken, reply)
     res = client.reply_message(replyToken, reply)
 
@@ -91,6 +91,12 @@ class WebhookController < ApplicationController
           }
         ]
       }
+    }
+  end
+  def client
+    @client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = CHANNEL_SECRET
+      config.channel_token  = CHANNEL_ACCESS_TOKEN
     }
   end
 end

@@ -58,6 +58,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "dotenv" #環境によって変わる設定値を制御する
 gem "faraday"
 gem "faraday_middleware"
+gem 'line-bot-api'
 
 group :production do
   gem 'rails_12factor'
