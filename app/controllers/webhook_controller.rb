@@ -50,6 +50,8 @@ class WebhookController < ApplicationController
     puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
     res = client.reply_message(replyToken, reply)
+    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+    puts "res : #{res}"
 
     if res.status == 200
       logger.info({success: res})
@@ -61,6 +63,12 @@ class WebhookController < ApplicationController
   end
 
   private
+  def client
+    @client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = CHANNEL_SECRET
+      config.channel_token  = CHANNEL_ACCESS_TOKEN
+    }
+  end
 
   def is_validate_signature
     logger.debug '======================== is_validate_signature start ============================'
@@ -95,12 +103,6 @@ class WebhookController < ApplicationController
           }
         ]
       }
-    }
-  end
-  def client
-    @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = CHANNEL_SECRET
-      config.channel_token  = CHANNEL_ACCESS_TOKEN
     }
   end
 end
