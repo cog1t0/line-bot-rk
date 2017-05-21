@@ -1,5 +1,6 @@
 require 'line/bot'
 class WebhookController < ApplicationController
+=begin
   protect_from_forgery with: :null_session
 
   CHANNEL_SECRET = ENV['LINE_CHANNEL_SECRET']
@@ -52,13 +53,11 @@ class WebhookController < ApplicationController
     res = client.reply_message(replyToken, reply)
     puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
     puts "res : #{res}"
-=begin
     if res.status == 200
       logger.info({success: res})
     else
       logger.info({fail: res})
     end
-=end
     logger.debug '======================== callback end ============================'
     render :nothing => true, status: :ok
   end
@@ -104,6 +103,66 @@ class WebhookController < ApplicationController
           }
         ]
       }
+    }
+  end
+=end
+  def callback
+    body = request.body.read
+    signature = request.env['HTTP_X_LINE_SIGNATURE']
+    unless client.validate_signature(body, signature)
+      head :bad_request
+      return
+    end
+    events = client.parse_events_from(body)
+    events.each do |event|
+      puts "=================================="
+      puts event.inspect
+      puts "=================================="
+
+      case event
+      when Line::Bot::Event::Postback
+        puts "postback==>#{event['postback']['data']}"
+          message =
+            case event['postback']['data']
+            when *%w(buy not_buy)
+              [stamp_message, reply_button_message]
+            when *%w(good niether bad)
+              url = "https://www.jins.com/jp/common/img/ec/sunglasses2017SS.jpg"
+              text = "ご回答ありがとうございます！！\n\nただいまサングラスのサマーセール中です。\n夏の紫外線対策に是非ご覧ください！！"
+              [text_message(text), image_message(url), reply_carousel_message]
+            end
+        client.reply_message(event['replyToken'], message)
+      when Line::Bot::Event::Message
+        puts "##################################"
+        puts "message : #{event.message['text']}"
+        case event.type
+        when Line::Bott::Event::MessageType::Text
+          message =
+            case event.message['text']
+            when 'アンケート' then
+              reply_confirm_message
+            else
+              reply_text = Talk.new.smalltalk event.message['text']
+              text_message reply_text
+            end
+          client.reply_message(event['replyToken'], message)
+        end
+      end
+    end
+    head :OK
+  end
+
+  private
+  def client
+    @client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    }
+  end
+  def text_message text
+    {
+      type: 'text',
+      text: text
     }
   end
 end
