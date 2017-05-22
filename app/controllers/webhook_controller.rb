@@ -51,7 +51,6 @@ class WebhookController < ApplicationController
 
     res = client.reply_message(replyToken, reply)
     puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts "res : #{res}"
     if res.status == 200
       logger.info({success: res})
     else
