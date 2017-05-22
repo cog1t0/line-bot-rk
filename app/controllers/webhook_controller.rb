@@ -48,6 +48,8 @@ class WebhookController < ApplicationController
     puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     puts client
     puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    puts client2.try(inspect)
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
     #res = client.reply_message(replyToken, reply)
     puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
@@ -61,7 +63,7 @@ class WebhookController < ApplicationController
   end
 
   private
-  def client
+  def client2
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = CHANNEL_SECRET
       config.channel_token  = CHANNEL_ACCESS_TOKEN
