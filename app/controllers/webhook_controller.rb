@@ -43,13 +43,13 @@ class WebhookController < ApplicationController
 
     end
 
-    #client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
-    #res = client.reply(replyToken, reply)
+    client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
+    res = client.reply(replyToken, reply)
     puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     puts client
     puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
-    res = client.reply_message(replyToken, reply)
+    #res = client.reply_message(replyToken, reply)
     puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
     if res.status == 200
       logger.info({success: res})
