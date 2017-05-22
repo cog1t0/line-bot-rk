@@ -1,6 +1,5 @@
 require 'line/bot'
 class WebhookController < ApplicationController
-=begin
   protect_from_forgery with: :null_session
 
   CHANNEL_SECRET = ENV['LINE_CHANNEL_SECRET']
@@ -105,7 +104,7 @@ class WebhookController < ApplicationController
       }
     }
   end
-=end
+=begin
   def callback
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -165,4 +164,5 @@ class WebhookController < ApplicationController
       text: text
     }
   end
+=end
 end
