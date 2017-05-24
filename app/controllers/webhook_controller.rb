@@ -64,6 +64,8 @@ class WebhookController < ApplicationController
 
   private
   def client2
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CHANNEL_SECRET #{CHANNEL_SECRET}"
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CHANNEL_ACCESS_TOKEN #{CHANNEL_ACCESS_TOKEN}"
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = CHANNEL_SECRET
       config.channel_token  = CHANNEL_ACCESS_TOKEN
