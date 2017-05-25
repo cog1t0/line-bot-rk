@@ -45,10 +45,10 @@ class WebhookController < ApplicationController
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, reply)
-    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-    puts client
-    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-    puts client2.try(inspect)
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ client"
+    puts "client : #{client}"
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ client2"
+    puts "client2 : #{client2.try(inspect)}"
     puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
     #res = client.reply_message(replyToken, reply)
