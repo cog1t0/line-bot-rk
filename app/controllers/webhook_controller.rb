@@ -42,22 +42,24 @@ class WebhookController < ApplicationController
     when "postback"
 
     end
-
+=begin
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
     res = client.reply(replyToken, reply)
-    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ client"
+    #uts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ client"
     puts "client : #{client}"
+=end
     puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ client2"
     puts "client2 : #{client2.try(inspect)}"
     puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-
-    #res = client.reply_message(replyToken, reply)
+    res = client2.reply_message(replyToken, reply)
     puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+=begin
     if res.status == 200
       logger.info({success: res})
     else
       logger.info({fail: res})
     end
+=end
     logger.debug '======================== callback end ============================'
     render :nothing => true, status: :ok
   end
