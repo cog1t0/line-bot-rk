@@ -26,7 +26,7 @@ class WebhookController < ApplicationController
       when "アンケート"
         puts "************************************************"
         puts reply_confirm_message
-        message = "アンケート"
+        message = "アンケートを開始します！！"
         puts "************************************************"
       else
         message = input_text
