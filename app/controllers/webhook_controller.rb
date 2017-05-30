@@ -29,7 +29,7 @@ class WebhookController < ApplicationController
         message = "アンケートを開始します！！"
         puts "************************************************"
       else
-        message = input_text
+        message = text_message(input_text)
       end
     when "beacon"
       logger.debug "==================== beacon type : #{event["beacon"]["type"]}"
@@ -70,6 +70,13 @@ class WebhookController < ApplicationController
     signature_answer = Base64.strict_encode64(hash)
     signature == signature_answer
     logger.debug '======================== is_validate_signature end ============================'
+  end
+
+  def text_message text
+    {
+      type: 'text',
+      text: text
+    }
   end
 
   def reply_confirm_message
@@ -146,12 +153,6 @@ class WebhookController < ApplicationController
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
       config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    }
-  end
-  def text_message text
-    {
-      type: 'text',
-      text: text
     }
   end
 =end

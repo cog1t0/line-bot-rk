@@ -26,14 +26,8 @@ class LineClient
     res
   end
 
-  def reply(replyToken, text)
-    messages = [
-      {
-        "type" => "text",
-        "text" => text
-      }
-    ]
-
+  def reply(replyToken, message)
+    messages = [message]
     body = {
       "replyToken" => replyToken,
       "messages" => messages
