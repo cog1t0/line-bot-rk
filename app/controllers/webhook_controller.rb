@@ -26,25 +26,25 @@ class WebhookController < ApplicationController
       when "アンケート"
         puts "************************************************"
         puts reply_confirm_message
-        reply = reply_confirm_message
+        message = "アンケート"
         puts "************************************************"
       else
-        reply = input_text
+        message = input_text
       end
     when "beacon"
       logger.debug "==================== beacon type : #{event["beacon"]["type"]}"
       case event["beacon"]["type"]
       when "enter"
-        reply = "Beacon いらっしゃいませ！！"
+        message = "Beacon いらっしゃいませ！！"
       when "leave"
-        reply = reply_confirm_message
+        message = reply_confirm_message
       end
     when "postback"
 
     end
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
-    res = client.reply(replyToken, reply)
+    res = client.reply(replyToken, message)
     puts "client : #{client}"
 
     if res.status == 200
