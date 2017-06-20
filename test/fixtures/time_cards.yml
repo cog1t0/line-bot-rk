@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  arrival_time: 2017-06-20 19:46:21
+  leave_time: 2017-06-20 19:46:21
+
+two:
+  user_id: 1
+  arrival_time: 2017-06-20 19:46:21
+  leave_time: 2017-06-20 19:46:21

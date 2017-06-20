@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @time_card.user_id %>
+</p>
+
+<p>
+  <strong>Arrival time:</strong>
+  <%= @time_card.arrival_time %>
+</p>
+
+<p>
+  <strong>Leave time:</strong>
+  <%= @time_card.leave_time %>
+</p>
+
+<%= link_to 'Edit', edit_time_card_path(@time_card) %> |
+<%= link_to 'Back', time_cards_path %>

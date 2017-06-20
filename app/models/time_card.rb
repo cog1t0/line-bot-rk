@@ -1,0 +1,2 @@
+class TimeCard < ApplicationRecord
+end

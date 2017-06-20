@@ -1,0 +1,32 @@
+<%= form_for(time_card) do |f| %>
+  <% if time_card.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(time_card.errors.count, "error") %> prohibited this time_card from being saved:</h2>
+
+      <ul>
+      <% time_card.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %>
+    <%= f.number_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :arrival_time %>
+    <%= f.datetime_select :arrival_time %>
+  </div>
+
+  <div class="field">
+    <%= f.label :leave_time %>
+    <%= f.datetime_select :leave_time %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
