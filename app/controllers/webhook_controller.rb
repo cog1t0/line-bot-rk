@@ -60,7 +60,7 @@ class WebhookController < ApplicationController
         if t.work_date == Date.today
           logger.debug "********************* 退勤 ***************************"
           #その日うちに帰る場合は、無条件でleave_timeを更新する
-          t.leave_time = DateTime.now
+          t.leave_time = DateTime.current
           t.save
         else
           logger.debug "********************* 徹夜からの退勤 ***************************"
@@ -103,7 +103,7 @@ class WebhookController < ApplicationController
         if t.work_date == Date.today
           puts "********************* 退勤 ***************************"
           #その日うちに帰る場合は、無条件でleave_timeを更新する
-          t.leave_time = DateTime.now
+          t.leave_time = DateTime.current
           t.save!
         else
           puts "********************* 徹夜からの退勤 ***************************"
@@ -134,8 +134,8 @@ class WebhookController < ApplicationController
 
   def record_arrival(user)
     t = user.time_cards.new
-    t.work_date = Date.today
-    t.arrival_time = DateTime.now
+    t.work_date = Date.current
+    t.arrival_time = DateTime.current
     t.save!
     logger.debug "******************** #{t.inspect} *******************"
   end
