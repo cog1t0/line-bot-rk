@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.line_user_id = params["line_user_id"]
   end
 
   # GET /users/1/edit
@@ -69,6 +70,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :string, :style, :string)
+      params.require(:user).permit(:name, :style, :line_user_id)
     end
 end
