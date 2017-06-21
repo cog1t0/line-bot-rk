@@ -34,6 +34,10 @@ class WebhookController < ApplicationController
         text = "ユーザー登録はこちらから行ってください。 #{APP_URL}/users/new?line_user_id=#{line_user_id}"
         message = text_message(text)
       when "出勤"
+        logger.debug "********************* 出勤 start ***************************"
+        logger.debug "********************* 出勤 start ***************************"
+        logger.debug "********************* 出勤 start ***************************"
+        logger.debug "********************* 出勤 start ***************************"
         if user.time_cards.present?
           if user.time_cards.last.work_date == Date.today
             logger.debug "********************* 本日は既に出勤済み ***************************"
