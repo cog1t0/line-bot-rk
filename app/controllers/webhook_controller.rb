@@ -30,7 +30,8 @@ class WebhookController < ApplicationController
         message = reply_confirm_message
         puts "************************************************"
       when "ユーザー登録"
-        message = "ユーザー登録はこちらから行ってください。 #{APP_URL}/users/new?line_user_id=#{line_user_id}"
+        text = "ユーザー登録はこちらから行ってください。 #{APP_URL}/users/new?line_user_id=#{line_user_id}"
+        message = text_message(text)
       else
         message = text_message(input_text)
       end
