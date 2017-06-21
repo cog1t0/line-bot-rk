@@ -21,6 +21,7 @@ class WebhookController < ApplicationController
     logger.debug "======================== event :#{event} ============================"
     logger.debug "======================== event_type :#{event_type} ============================"
     logger.debug "======================== replyToken :#{replyToken} ============================"
+    logger.debug "======================== user :#{user.inspect} ============================"
 
     case event_type
     when "message"
