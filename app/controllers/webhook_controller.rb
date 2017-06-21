@@ -133,7 +133,7 @@ class WebhookController < ApplicationController
 
   def record_arrival(user)
     t = user.time_cards.new
-    t.work_date = Date.now
+    t.work_date = Date.today
     t.arrival_time = DateTime.now
     t.save
   end
