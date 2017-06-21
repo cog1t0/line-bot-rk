@@ -17,6 +17,7 @@ class WebhookController < ApplicationController
     event_type = event["type"]
     replyToken = event["replyToken"]
     line_user_id = event["source"]["userId"]
+    user = User.find_by(line_user_id: line_user_id)
     logger.debug "======================== event :#{event} ============================"
     logger.debug "======================== event_type :#{event_type} ============================"
     logger.debug "======================== replyToken :#{replyToken} ============================"
@@ -32,6 +33,29 @@ class WebhookController < ApplicationController
       when "ユーザー登録"
         text = "ユーザー登録はこちらから行ってください。 #{APP_URL}/users/new?line_user_id=#{line_user_id}"
         message = text_message(text)
+      when "出勤"
+        if user.time_cards.last.work_date == Date.today
+          puts "********************* 本日は既に出勤済み ***************************"
+          #本日すでに出勤済みには何もしない
+        else
+          puts "********************* 出勤 ***************************"
+          #出社
+          record_arrival(user)
+          message = text_message("おはようございます。今日も頑張りましょう！")
+        end
+      when "退勤"
+        t = user.time_cards.last
+        if t.work_date == Date.today
+          puts "********************* 退勤 ***************************"
+          #その日うちに帰る場合は、無条件でleave_timeを更新する
+          t.leave_time = DateTime.now
+          t.save
+        else
+          puts "********************* 徹夜からの退勤 ***************************"
+          #日付をまたいだ場合
+          #TODO 仕様を詰める
+        end
+        message = text_message("お疲れさまでした。明日も頑張りましょう！出勤：#{t.arrival_time} 退勤：#{t.leave_time}")
       else
         message = text_message(input_text)
       end
@@ -42,7 +66,6 @@ class WebhookController < ApplicationController
         puts "************************************************"
         puts "beacon enter"
         puts "************************************************"
-        user = User.find_by(line_user_id: line_user_id)
         if user.time_cards.present?
           puts "********************* 二回目以降の出勤 ***************************"
           if user.time_cards.last.work_date == Date.today
@@ -51,19 +74,13 @@ class WebhookController < ApplicationController
           else
             puts "********************* 出勤 ***************************"
             #出社
-            t = user.time_cards.new
-            t.work_date = Date.now
-            t.arrival_time = DateTime.now
-            t.save
+            record_arrival(user)
             message = text_message("おはようございます。今日も頑張りましょう！")
           end
         else
           puts "********************* はじめての出勤 ***************************"
           #はじめての勤怠登録
-          t = user.time_cards.new
-          t.work_date = Date.now
-          t.arrival_time = DateTime.now
-          t.save
+          record_arrival(user)
           message = text_message("おはようございます。今日も頑張りましょう！")
         end
       when "leave"
@@ -75,6 +92,7 @@ class WebhookController < ApplicationController
           puts "********************* 退勤 ***************************"
           #その日うちに帰る場合は、無条件でleave_timeを更新する
           t.leave_time = DateTime.now
+          t.save
         else
           puts "********************* 徹夜からの退勤 ***************************"
           #日付をまたいだ場合
@@ -101,6 +119,13 @@ class WebhookController < ApplicationController
   end
 
   private
+
+  def record_arrival(user)
+    t = user.time_cards.new
+    t.work_date = Date.now
+    t.arrival_time = DateTime.now
+    t.save
+  end
 
   def is_validate_signature
     logger.debug '======================== is_validate_signature start ============================'
