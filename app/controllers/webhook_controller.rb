@@ -136,6 +136,7 @@ class WebhookController < ApplicationController
     t.work_date = Date.today
     t.arrival_time = DateTime.now
     t.save
+    logger.debug "******************** #{t.inspect} *******************"
   end
 
   def is_validate_signature
