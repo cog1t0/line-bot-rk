@@ -103,7 +103,7 @@ class WebhookController < ApplicationController
           puts "********************* 退勤 ***************************"
           #その日うちに帰る場合は、無条件でleave_timeを更新する
           t.leave_time = DateTime.now
-          t.save
+          t.save!
         else
           puts "********************* 徹夜からの退勤 ***************************"
           #日付をまたいだ場合
@@ -135,7 +135,7 @@ class WebhookController < ApplicationController
     t = user.time_cards.new
     t.work_date = Date.today
     t.arrival_time = DateTime.now
-    t.save
+    t.save!
     logger.debug "******************** #{t.inspect} *******************"
   end
 
