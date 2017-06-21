@@ -39,9 +39,36 @@ class WebhookController < ApplicationController
       logger.debug "==================== beacon type : #{event["beacon"]["type"]}"
       case event["beacon"]["type"]
       when "enter"
-        message = "Beacon いらっしゃいませ！！"
+        user = User.find_by(line_user_id: line_user_id)
+        if user.time_cards.present?
+          if user.time_cards.last.work_date == Date.today
+            #本日すでに出勤済みには何もしない
+          else
+            #出社
+            t = user.time_cards.new
+            t.work_date = Date.now
+            t.arrival_time = DateTime.now
+            t.save
+            message = text_message("おはようございます。今日も頑張りましょう！")
+          end
+        else
+          #はじめての勤怠登録
+          t = user.time_cards.new
+          t.work_date = Date.now
+          t.arrival_time = DateTime.now
+          t.save
+          message = text_message("おはようございます。今日も頑張りましょう！")
+        end
       when "leave"
-        message = reply_confirm_message
+        t = user.time_cards.last
+        if t.work_date == Date.today
+          #その日うちに帰る場合は、無条件でleave_timeを更新する
+          t.leave_time = DateTime.now
+        else
+          #日付をまたいだ場合
+          #TODO 仕様を詰める
+        end
+        message = text_message("お疲れさまでした。明日も頑張りましょう！出勤：#{t.arrival_time} 退勤：#{t.leave_time}")
       end
     when "postback"
 

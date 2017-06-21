@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170620104621) do
+ActiveRecord::Schema.define(version: 20170621051850) do
 
   create_table "time_cards", force: :cascade do |t|
     t.integer  "user_id"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20170620104621) do
     t.datetime "leave_time"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.date     "work_date"
   end
 
   create_table "users", force: :cascade do |t|
