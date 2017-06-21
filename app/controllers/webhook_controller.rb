@@ -35,10 +35,10 @@ class WebhookController < ApplicationController
         message = text_message(text)
       when "出勤"
         if user.time_cards.last.work_date == Date.today
-          puts "********************* 本日は既に出勤済み ***************************"
+          logger.debug "********************* 本日は既に出勤済み ***************************"
           #本日すでに出勤済みには何もしない
         else
-          puts "********************* 出勤 ***************************"
+          logger.debug "********************* 出勤 ***************************"
           #出社
           record_arrival(user)
           message = text_message("おはようございます。今日も頑張りましょう！")
@@ -46,12 +46,12 @@ class WebhookController < ApplicationController
       when "退勤"
         t = user.time_cards.last
         if t.work_date == Date.today
-          puts "********************* 退勤 ***************************"
+          logger.debug "********************* 退勤 ***************************"
           #その日うちに帰る場合は、無条件でleave_timeを更新する
           t.leave_time = DateTime.now
           t.save
         else
-          puts "********************* 徹夜からの退勤 ***************************"
+          logger.debug "********************* 徹夜からの退勤 ***************************"
           #日付をまたいだ場合
           #TODO 仕様を詰める
         end
