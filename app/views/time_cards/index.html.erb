@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>User</th>
+      <th>Work date</th>
       <th>Arrival time</th>
       <th>Leave time</th>
       <th colspan="3"></th>
@@ -16,6 +17,7 @@
     <% @time_cards.each do |time_card| %>
       <tr>
         <td><%= time_card.user_id %></td>
+        <td><%= time_card.work_date %></td>
         <td><%= time_card.arrival_time %></td>
         <td><%= time_card.leave_time %></td>
         <td><%= link_to 'Show', time_card %></td>
