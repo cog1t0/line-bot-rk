@@ -22,10 +22,10 @@ ActiveRecord::Schema.define(version: 20170620104621) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.string   "line_id"
+    t.string   "line_user_id"
     t.string   "style"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
 end

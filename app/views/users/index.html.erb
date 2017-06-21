@@ -6,9 +6,8 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>String</th>
       <th>Style</th>
-      <th>String</th>
+      <th>Line_user_id</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,9 +16,8 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.name %></td>
-        <td><%= user.string %></td>
         <td><%= user.style %></td>
-        <td><%= user.string %></td>
+        <td><%= user.line_user_id %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
