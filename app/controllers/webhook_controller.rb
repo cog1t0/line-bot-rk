@@ -39,11 +39,17 @@ class WebhookController < ApplicationController
       logger.debug "==================== beacon type : #{event["beacon"]["type"]}"
       case event["beacon"]["type"]
       when "enter"
+        puts "************************************************"
+        puts "beacon enter"
+        puts "************************************************"
         user = User.find_by(line_user_id: line_user_id)
         if user.time_cards.present?
+          puts "********************* 二回目以降の出勤 ***************************"
           if user.time_cards.last.work_date == Date.today
+            puts "********************* 本日は既に出勤済み ***************************"
             #本日すでに出勤済みには何もしない
           else
+            puts "********************* 出勤 ***************************"
             #出社
             t = user.time_cards.new
             t.work_date = Date.now
@@ -52,6 +58,7 @@ class WebhookController < ApplicationController
             message = text_message("おはようございます。今日も頑張りましょう！")
           end
         else
+          puts "********************* はじめての出勤 ***************************"
           #はじめての勤怠登録
           t = user.time_cards.new
           t.work_date = Date.now
@@ -60,11 +67,16 @@ class WebhookController < ApplicationController
           message = text_message("おはようございます。今日も頑張りましょう！")
         end
       when "leave"
+        puts "************************************************"
+        puts "beacon leave"
+        puts "************************************************"
         t = user.time_cards.last
         if t.work_date == Date.today
+          puts "********************* 退勤 ***************************"
           #その日うちに帰る場合は、無条件でleave_timeを更新する
           t.leave_time = DateTime.now
         else
+          puts "********************* 徹夜からの退勤 ***************************"
           #日付をまたいだ場合
           #TODO 仕様を詰める
         end
