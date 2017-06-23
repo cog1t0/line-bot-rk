@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/zpaulovics/datetimepicker-rails.git
+  revision: 36d21cec5da7f5b214925804f60e63c61c747023
+  branch: master
+  submodules: true
+  specs:
+    datetimepicker-rails (4.7.16)
+      momentjs-rails (>= 2.9.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -91,6 +100,8 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
+    momentjs-rails (2.17.1)
+      railties (>= 3.1)
     multi_json (1.12.1)
     multipart-post (2.0.0)
     nio4r (1.2.1)
@@ -190,6 +201,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
+  datetimepicker-rails!
   dotenv
   execjs
   faraday
@@ -199,6 +211,7 @@ DEPENDENCIES
   less-rails
   line-bot-api
   listen (~> 3.0.5)
+  momentjs-rails
   pg
   puma (~> 3.0)
   rails (~> 5.0.1)
