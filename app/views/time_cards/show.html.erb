@@ -1,24 +1,25 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = TimeCard -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <strong>ユーザー:</strong>
-  <%= @time_card.user_id %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
+  <dd><%= @time_card.user_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:arrival_time) %>:</strong></dt>
+  <dd><%= @time_card.arrival_time %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:leave_time) %>:</strong></dt>
+  <dd><%= @time_card.leave_time %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:work_date) %>:</strong></dt>
+  <dd><%= @time_card.work_date %></dd>
+</dl>
 
-<p>
-  <strong>出勤日:</strong>
-  <%= @time_card.work_date %>
-</p>
-
-<p>
-  <strong>出勤時間:</strong>
-  <%= @time_card.arrival_time %>
-</p>
-
-<p>
-  <strong>退社時間:</strong>
-  <%= @time_card.leave_time %>
-</p>
-
-<%= link_to 'Edit', edit_time_card_path(@time_card) %> |
-<%= link_to 'Back', time_cards_path %>
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              time_cards_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_time_card_path(@time_card), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              time_card_path(@time_card),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>

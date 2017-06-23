@@ -1,37 +1,14 @@
-<%= form_for(time_card) do |f| %>
-  <% if time_card.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(time_card.errors.count, "error") %> prohibited this time_card from being saved:</h2>
+<%= simple_form_for @time_card, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :user_id %>
+  <%= error_span(@time_card[:user_id]) %>
+  <%= f.input :arrival_time %>
+  <%= error_span(@time_card[:arrival_time]) %>
+  <%= f.input :leave_time %>
+  <%= error_span(@time_card[:leave_time]) %>
+  <%= f.input :work_date %>
+  <%= error_span(@time_card[:work_date]) %>
 
-      <ul>
-      <% time_card.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :user_id %>
-    <%= f.number_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= f.label :work_date %>
-    <%= f.date_select :work_date %>
-  </div>
-
-  <div class="field">
-    <%= f.label :arrival_time %>
-    <%= f.datetime_select :arrival_time %>
-  </div>
-
-  <div class="field">
-    <%= f.label :leave_time %>
-    <%= f.datetime_select :leave_time %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                time_cards_path, :class => 'btn btn-default' %>
 <% end %>
