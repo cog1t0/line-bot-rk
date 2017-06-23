@@ -48,6 +48,7 @@ class WebhookController < ApplicationController
             #出社
             record_arrival(user)
             message = text_message("おはようございます。今日も頑張りましょう！")
+            end
           end
         else
           logger.debug "********************* はじめての出勤 ***************************"
@@ -84,8 +85,15 @@ class WebhookController < ApplicationController
           else
             logger.debug "********************* 出勤 ***************************"
             #出社
-            record_arrival(user)
-            message = text_message("おはようございます。今日も頑張りましょう！")
+            if user.full_time?
+              if Time.parse("10:00:00") > Time.current
+                record_arrival(user)
+                message = text_message("おはようございます。今日も頑張りましょう！")
+              end
+            else
+              record_arrival(user)
+              message = text_message("おはようございます。今日も頑張りましょう！")
+            end
           end
         else
           logger.debug "********************* はじめての出勤 ***************************"
@@ -99,8 +107,15 @@ class WebhookController < ApplicationController
         if t.work_date == Date.today
           logger.debug "********************* 退勤 ***************************"
           #その日うちに帰る場合は、無条件でleave_timeを更新する
-          t.leave_time = DateTime.current
-          t.save!
+          if user.full_time?
+            if Time.parse("18:00:00") < Time.current
+              t.leave_time = DateTime.current
+              t.save!
+            end
+          else
+            t.leave_time = DateTime.current
+            t.save!
+          end
         else
           logger.debug "********************* 徹夜からの退勤 ***************************"
           #日付をまたいだ場合
