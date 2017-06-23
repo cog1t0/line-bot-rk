@@ -80,3 +80,5 @@ gem 'simple_form'
 gem 'momentjs-rails'
 # DateTimePicker
 gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
+
+gem "font-awesome-rails"

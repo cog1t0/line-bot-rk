@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      time_card: タイムカード
+    attributes:
+      user:
+        name: 名前
+        line_user_id: LINEユーザーID
+        work_style: 勤務形態
+      time_card:
+        user_id: ユーザーID
+        arrival_time: 出勤時間
+        leave_time: 退勤時間
+        work_date: 勤務日
