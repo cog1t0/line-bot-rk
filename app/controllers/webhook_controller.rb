@@ -48,7 +48,6 @@ class WebhookController < ApplicationController
             #出社
             record_arrival(user)
             message = text_message("おはようございます。今日も頑張りましょう！")
-            end
           end
         else
           logger.debug "********************* はじめての出勤 ***************************"
@@ -124,6 +123,7 @@ class WebhookController < ApplicationController
         message = text_message("お疲れさまでした。明日も頑張りましょう！出勤：#{t.arrival_time} 退勤：#{t.leave_time}")
       end
     when "postback"
+    else
 
     end
 
