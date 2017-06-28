@@ -13,11 +13,12 @@ html[lang="en"]
     .navbar.navbar-default.navbar-static-top
       .container
         button.navbar-toggle[type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse"]
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
         a.navbar-brand[href="#"]
           | LineBot
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          ul.nav.navbar-nav
+            li =link_to "ユーザーリスト", users_path
+            li =link_to "タイムカードリスト", time_cards_path
     .container
       .row
         .col-lg-9
