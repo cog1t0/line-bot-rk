@@ -1,0 +1,11 @@
+= simple_form_for @time_card, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :user_id
+  - #= error_span(@time_card[:user_id])
+  = f.input :work_date, as: :date_picker
+  - #= error_span(@time_card[:work_date])
+  = f.input :arrival_time
+  - #= error_span(@time_card[:arrival_time])
+  = f.input :leave_time
+  - #= error_span(@time_card[:leave_time])
+  = f.button :submit, :class => 'btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")),time_cards_path, :class => 'btn btn-default'
