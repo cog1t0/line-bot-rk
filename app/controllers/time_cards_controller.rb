@@ -5,6 +5,11 @@ class TimeCardsController < ApplicationController
   # GET /time_cards.json
   def index
     @time_cards = TimeCard.all
+
+    respond_to do |format|
+      format.html
+      format.csv {send_data @time_cards.to_csv}
+    end
   end
 
   # GET /time_cards/1
